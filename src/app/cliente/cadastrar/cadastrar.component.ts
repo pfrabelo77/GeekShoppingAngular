@@ -28,8 +28,8 @@ export class CadastrarComponent implements OnInit {
 
   cadastrar(): void {
     if (this.formCliente.form.valid) {
-  	  this.clienteService.cadastrar(this.cliente);
-  	  this.router.navigate(["/Home"]);
+  	  //this.clienteService.cadastrar(this.cliente);
+  	  this.router.navigate(["/home/bemvindo"]);
     }
   }
 

@@ -13,7 +13,8 @@
         #nome="ngModel"
         minlength="15" 
         required> 
-      <div *ngIf="nome.errors && (nome.dirty || nome.touched)"
+        
+      <div *ngIf="nome.errors && (nome.dirty || nome.touched) || formCliente.submitted" 
            class="alert alert-danger">
         <div [hidden]="!nome.errors['required']">
           Digite o nome do cliente.
@@ -21,6 +22,9 @@
         <div [hidden]="!nome.errors['minlength']">
           O Nome deve conter ao menos 15 caracteres.
         </div>
+        <!-- <div ng-hide="!nome.errors['minlength']">
+          Ng-Hide O Nome deve conter ao menos 15 caracteres.
+        </div> -->
       </div>
     </div>
     <div class="form-group text-center">
@@ -29,7 +33,7 @@
         class="btn btn-success"
         (click)="cadastrar()"
         value="Cadastrar"
-        [disabled]="!formCliente.form.valid">
+        [disabled]="!formCliente.form.valid || !(nome.dirty || nome.touched) ">
       <a [routerLink]="['/home']"
         class="btn btn-default">
          Voltar
