@@ -22,7 +22,7 @@ export class CadastrarComponent implements OnInit {
   	private router: Router) { }
 
   ngOnInit() {
-  	this.cliente = new Cliente(0, '', '', '', '', new Date(), 0, true); 
+  	this.cliente = new Cliente(0, '', '', '', '', null, null, true); 
 
   }
 

@@ -7,14 +7,20 @@ import { FormsModule } from '@angular/forms';
 
 import { ClienteService } from './shared/cliente.service';
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 @NgModule({
   declarations: [
     CadastrarComponent
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    MatSlideToggleModule
+    
   ],
   providers: [
   	ClienteService
