@@ -22,36 +22,42 @@
       </div>
       <div class="col-md-4">
         <label  class="form-label">E-mail</label> 
-          <input type="text" [ngClass]="emailCli.valid || (!formCliente.submitted && !(emailCli.dirty || emailCli.touched)) ? 'form-control ' : 'form-control is-invalid'"  id="emailCli" name="emailCli" [(ngModel)]="cliente.email" #emailCli="ngModel" email required>   
+          <input type="text" placeholder="exemplo: seuemail@gmail.com" [ngClass]="emailCli.valid || (!formCliente.submitted && !(emailCli.dirty || emailCli.touched)) ? 'form-control ' : 'form-control is-invalid'"  id="emailCli" name="emailCli" [(ngModel)]="cliente.email" #emailCli="ngModel" email required>   
           <div class="invalid-feedback" [hidden]="emailCli.valid || (!formCliente.submitted && !(emailCli.dirty || emailCli.touched))">  
             E-mail obrigatório.
           </div>
       </div>
       <div class="col-md-4">
         <label  class="form-label">CPF</label> 
-          <input type="text" [ngClass]="cpf.valid || (!formCliente.submitted && !(cpf.dirty || cpf.touched)) ? 'form-control ' : 'form-control is-invalid'"   id="cpf" name="cpf" [(ngModel)]="cliente.cpf" #cpf="ngModel" required>   
+          <input type="text" mask="000.000.000-00" [ngClass]="cpf.valid || (!formCliente.submitted && !(cpf.dirty || cpf.touched)) ? 'form-control ' : 'form-control is-invalid'"   id="cpf" name="cpf" [(ngModel)]="cliente.cpf" #cpf="ngModel" required>   
           <div class="invalid-feedback" [hidden]="cpf.valid || (!formCliente.submitted && !(cpf.dirty || cpf.touched))">  
             CPF obrigatório.
           </div>   
       </div>
       <div class="col-md-3">
         <label  class="form-label">Telefone</label>
-        <input type="text" [ngClass]="telefone.valid || (!formCliente.submitted && !(telefone.dirty || telefone.touched)) ? 'form-control ' : 'form-control is-invalid'"  id="telefone" name="telefone" [(ngModel)]="cliente.telefone" #telefone="ngModel" required >
+        <input type="text" mask="(00) 00000 0000" [ngClass]="telefone.valid || (!formCliente.submitted && !(telefone.dirty || telefone.touched)) ? 'form-control ' : 'form-control is-invalid'"  id="telefone" name="telefone" [(ngModel)]="cliente.telefone" #telefone="ngModel" required >
         <div class="invalid-feedback" [hidden]="telefone.valid || (!formCliente.submitted && !(telefone.dirty || telefone.touched))">  
           Telefone obrigatório.
         </div>
       </div>
       <div class="col-md-3">
-        <label  class="form-label">Data de Nascimento</label>
-        <input type="text" [ngClass]="dataNascimento.valid || (!formCliente.submitted && !(dataNascimento.dirty || dataNascimento.touched)) ? 'form-control ' : 'form-control is-invalid'"  id="dataNascimento" name="dataNascimento" [(ngModel)]="cliente.dataNascimento" #dataNascimento="ngModel" required >
-        <div class="invalid-feedback" [hidden]="dataNascimento.valid || (!formCliente.submitted && !(dataNascimento.dirty || dataNascimento.touched))">  
-          Data de Nascimento obrigatório.
+        <label  class="form-label">Data de Nascimento</label>  
+        <div class="input-group mb-3">
+          <input [matDatepicker]="picker2" type="text" placeholder="DD/MM/YYYY" [ngClass]="dataNascimento.valid || (!formCliente.submitted && !(dataNascimento.dirty || dataNascimento.touched)) ? 'form-control ' : 'form-control is-invalid'"  id="dataNascimento" name="dataNascimento" [(ngModel)]="cliente.dataNascimento" #dataNascimento="ngModel" required readonly >           
+          <span class="input-group-text" style="padding: 0px;">                
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </span>
+          <div class="invalid-feedback" [hidden]="dataNascimento.valid || (!formCliente.submitted && !(dataNascimento.dirty || dataNascimento.touched))">
+            Data de Nascimento obrigatório.
+          </div> 
         </div>
       </div>
       <div class="col-md-3">
         <label  class="form-label">Crédito Aprovado</label>
-        <select  [ngClass]="creditoAprovado.valid || (!formCliente.submitted && !(creditoAprovado.dirty || creditoAprovado.touched)) ? 'form-control ' : 'form-control is-invalid'" id="creditoAprovado" name="creditoAprovado" [(ngModel)]="cliente.creditoAprovado" #creditoAprovado="ngModel" required>
-          <option selected value="">Escolha...</option>
+        <select  [ngClass]="creditoAprovado.valid || (!formCliente.submitted && !(creditoAprovado.dirty || creditoAprovado.touched)) ? 'form-select ' : 'form-select is-invalid'" id="creditoAprovado" name="creditoAprovado" [(ngModel)]="cliente.creditoAprovado" #creditoAprovado="ngModel" required>
+          <option selected value="null">Selecione...</option>
           <option  value="0">R$ 0,00 (sem credito)</option>
           <option  value="1000">R$ 1.000,00</option>
           <option  value="2000">R$ 2.000,00</option>

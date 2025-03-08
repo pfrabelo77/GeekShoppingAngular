@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild , ChangeDetectionStrategy} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms'; 
 
@@ -8,7 +8,8 @@ import { Cliente } from 'src/app/shared/cliente.model'; ;
 @Component({
   selector: 'app-cadastrar',
   templateUrl: './cadastrar.component.html',
-  styleUrls: ['./cadastrar.component.css']
+  styleUrls: ['./cadastrar.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CadastrarComponent implements OnInit {
 
