@@ -14,7 +14,7 @@
     <div class="row g-3">
       <div class="col-md-4">
         <label  class="form-label">Nome</label>
-        <input type="text" [ngClass]="nome.valid || (!formCliente.submitted && !(nome.dirty || nome.touched)) ? 'form-control ' : 'form-control is-invalid'" value="" id="nome" name="nome" [(ngModel)]="cliente.nome" #nome="ngModel" minlength="15" required> 
+        <input type="text" placeholder="Digite seu nome completo" [ngClass]="nome.valid || (!formCliente.submitted && !(nome.dirty || nome.touched)) ? 'form-control ' : 'form-control is-invalid'" value="" id="nome" name="nome" [(ngModel)]="cliente.nome" #nome="ngModel" minlength="15" required> 
         <div  class="invalid-feedback"  [hidden]="nome.valid || (!formCliente.submitted && !(nome.dirty || nome.touched))">          
           O nome dever ter no minimo 15 caracteres.
         </div>
