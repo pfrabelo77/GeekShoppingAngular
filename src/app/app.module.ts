@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID,NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
  import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,13 @@ import { BrowserModule } from '@angular/platform-browser';
 // import {MatButtonModule} from '@angular/material/button';
 import { HomeModule } from './home/home.module';
 import { ClienteModule } from './cliente/cliente.module';
+
+// **************************************************
+import ptBr from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(ptBr);
+// 
 
 @NgModule({
   declarations: [
@@ -29,7 +36,12 @@ import { ClienteModule } from './cliente/cliente.module';
          ClienteModule
   ],
   
-  providers: [],
+  providers: [
+        // ************************************
+        { provide: LOCALE_ID, useValue: 'pt' },
+        // ************************************
+    
+  ],
   //schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
