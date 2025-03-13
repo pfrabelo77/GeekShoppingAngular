@@ -12,6 +12,7 @@ import { Cliente } from 'src/app/shared/cliente.model';
   styleUrls: ['./cadastrar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class CadastrarComponent implements OnInit {
 
   @ViewChild('formCliente', { static: true })

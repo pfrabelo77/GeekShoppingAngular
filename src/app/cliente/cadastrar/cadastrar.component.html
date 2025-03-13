@@ -42,7 +42,7 @@
       <div class="col-md-3">
         <label  class="form-label">Data de Nascimento</label>  
         <div class="input-group mb-3">
-          <input [matDatepicker]="picker2" type="text" placeholder="DD/MM/YYYY" [ngClass]="dataNascimento.valid || (!formCliente.submitted && !(dataNascimento.dirty || dataNascimento.touched)) ? 'form-control ' : 'form-control is-invalid'"  id="dataNascimento" name="dataNascimento" [(ngModel)]="cliente.dataNascimento" #dataNascimento="ngModel" required readonly >           
+          <input [matDatepicker]="picker2" type="text" placeholder="Selecione via icone" [ngClass]="dataNascimento.valid || (!formCliente.submitted && !(dataNascimento.dirty || dataNascimento.touched)) ? 'form-control ' : 'form-control is-invalid'"  id="dataNascimento" name="dataNascimento" [(ngModel)]="cliente.dataNascimento" #dataNascimento="ngModel" required readonly >           
           <span class="input-group-text" style="padding: 0px;">                
             <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>

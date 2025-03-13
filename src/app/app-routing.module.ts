@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BemvindoComponent } from './home/bemvindo/bemvindo.component';
 import { CadastrarComponent } from './cliente/cadastrar/cadastrar.component';
 import { ListarComponent } from './cliente/listar/listar.component';	
+import { ListarProdutoComponent } from './produto/listar-produto/listar-produto.component';
 
 const routes: Routes = [
   { path: '', 
@@ -25,6 +26,10 @@ const routes: Routes = [
 	{ 
 		path: 'cliente/listar',
 		component: ListarComponent	 
+	}, 
+	{ 
+		path: 'produto/FindAll',
+		component: ListarProdutoComponent	 
 	}, 
 ];
 

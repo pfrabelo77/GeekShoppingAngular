@@ -11,6 +11,7 @@ import { BrowserModule } from '@angular/platform-browser';
 // import {MatButtonModule} from '@angular/material/button';
 import { HomeModule } from './home/home.module';
 import { ClienteModule } from './cliente/cliente.module';
+import { ProdutoModule } from './produto/produto.module';
 
 // **************************************************
 import ptBr from '@angular/common/locales/pt';
@@ -33,7 +34,8 @@ registerLocaleData(ptBr);
     //     MatDividerModule, 
     //     MatIconModule,
          HomeModule,
-         ClienteModule
+         ClienteModule,
+         ProdutoModule  
   ],
   
   providers: [
