@@ -30,12 +30,31 @@
 }
   </style>
 
+<div class="row">
+  <div class="col-6"><mat-form-field appearance="standard">
+    <mat-label>Filtrar Tablela</mat-label>
+    <input matInput placeholder="Digite o nome" search (keyup)="ApplyFilter($event)" #inputNome>
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <mat-hint>Clique aqui e digite o nome</mat-hint>
+  </mat-form-field>&nbsp;
+  <span> {{dataSource.filteredData.length}} registros encontrados</span>  
+</div>
+  <div class="col-6"> 
+    <mat-form-field appearance="standard">
+      <mat-label>Filtrar Categoria na API(HttpPost)</mat-label>
+      <input matInput placeholder="Digite a categoria" #categoryNameFiltro> 
+      <mat-hint>Digite e click "Filtrar"</mat-hint>
+    </mat-form-field>&nbsp;
+    <input type="submit" value="Filtrar" class="btn btn-primary" (click)="FiltrarCategoria(categoryNameFiltro.value)">  
+</div>
+</div>
+<br>
   <div class="mat-elevation-z8 ">
-    <table mat-table [dataSource]="dataSource" class="demo-table">
+    <table mat-table matSort [dataSource]="dataSource" class="demo-table">
   
      <!-- name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> name  (Click p/ Ordenar)</th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
   
@@ -84,6 +103,11 @@
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Mostrar quando dados não existem -->
+       <tr *matNoDataRow>
+        <td class="mat-cell" colspan="6"> O Filtro não encontrou nenhum dado para o nome {{inputNome.value}}</td>
+      </tr>
     </table>
   
     <mat-paginator [pageSizeOptions]="[5, 10]"
@@ -93,4 +117,4 @@
   </div>
    
 </form>
-{{ELEMENT_DATA | json}}
+<!-- {{ELEMENT_DATA | json}} -->

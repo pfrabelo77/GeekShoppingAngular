@@ -10,7 +10,7 @@ import { Produto } from 'src/app/shared/produto.model';
 })
 export class ProdutoService {
 
-  url = 'https://localhost:7184/api/Produto/FindAll'; // api
+  url = 'https://localhost:7184/api/Produto/'; // api
   //urlTeste = 'https://localhost:7184/api/Produto/GetProdutos'; // api rest fake
   //urlTeste2 = 'https://localhost:7184/api/Produto/GetProdutoStr'; // api rest fake
   // injetando o HttpClient
@@ -23,7 +23,7 @@ export class ProdutoService {
 
   // Lista todos os produtos
   FindAll(): Observable<Produto[]> {
-    return this.httpClient.get<Produto[]>(this.url, this.httpOptions) 
+    return this.httpClient.get<Produto[]>(this.url + 'FindAll', this.httpOptions) 
       .pipe(
         retry(2),
         catchError(this.handleError))
@@ -48,13 +48,13 @@ export class ProdutoService {
   // }
 
   // // salva um carro
-  // saveCar(car: Car): Observable<Car> {
-  //   return this.httpClient.post<Car>(this.url, JSON.stringify(car), this.httpOptions)
-  //     .pipe(
-  //       retry(2),
-  //       catchError(this.handleError)
-  //     )
-  // }
+  FindProduto(produto: Produto): Observable<Produto[]> {
+    return this.httpClient.post<Produto[]>(this.url + 'FindProduto', JSON.stringify(produto), this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
 
   // // utualiza um carro
   // updateCar(car: Car): Observable<Car> {

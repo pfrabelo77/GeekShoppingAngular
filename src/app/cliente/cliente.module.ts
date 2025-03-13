@@ -17,8 +17,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { NativeDateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
 
@@ -48,6 +49,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatIconModule,
     MatTableModule, 
     MatPaginatorModule,
+    MatSortModule,
     MatToolbarModule  
     
   ],

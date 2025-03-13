@@ -18,9 +18,9 @@ import { Cliente } from 'src/app/shared/cliente.model';
 })
 export class ListarComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   constructor(private clienteService: ClienteService,
   	private router: Router) { }
 
@@ -34,10 +34,11 @@ export class ListarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.ELEMENT_DATA = this.listarTodos();
     this.dataSource = new MatTableDataSource<Cliente>(this.ELEMENT_DATA);
-  }
+ }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   listarTodos(): Cliente[] {
