@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms'; 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 import { ClienteService } from '../shared/cliente.service';
 import { Cliente } from 'src/app/shared/cliente.model';
@@ -17,6 +18,9 @@ import { Cliente } from 'src/app/shared/cliente.model';
 })
 export class ListarComponent implements OnInit, AfterViewInit {
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  
   constructor(private clienteService: ClienteService,
   	private router: Router) { }
 
@@ -26,7 +30,7 @@ export class ListarComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['nome', 'email', 'cpf','telefone','dataNascimento','creditoAprovado','ativo', 'id'];
   dataSource = new MatTableDataSource<Cliente>(this.ELEMENT_DATA);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  
   ngOnInit(): void {
     this.ELEMENT_DATA = this.listarTodos();
     this.dataSource = new MatTableDataSource<Cliente>(this.ELEMENT_DATA);

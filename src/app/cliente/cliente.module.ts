@@ -19,6 +19,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 
 
@@ -47,6 +48,7 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
     MatIconModule,
     MatTableModule, 
     MatPaginatorModule,
+    MatToolbarModule  
     
   ],
   providers: [
