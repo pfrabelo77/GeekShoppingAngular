@@ -5,6 +5,7 @@ import { BemvindoComponent } from './home/bemvindo/bemvindo.component';
 import { CadastrarComponent } from './cliente/cadastrar/cadastrar.component';
 import { ListarComponent } from './cliente/listar/listar.component';	
 import { ListarProdutoComponent } from './produto/listar-produto/listar-produto.component';
+import { CadastrarProdutoComponent } from './produto/cadastrar-produto/cadastrar-produto.component';
 
 const routes: Routes = [
   { path: '', 
@@ -31,6 +32,10 @@ const routes: Routes = [
 		path: 'produto/FindAll',
 		component: ListarProdutoComponent	 
 	}, 
+	{ 
+		path: 'produto/cadastrar',
+		component: CadastrarProdutoComponent	 
+	}
 ];
 
 @NgModule({

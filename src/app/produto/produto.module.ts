@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListarProdutoComponent } from './listar-produto/listar-produto.component';
-
 
 
 import { RouterModule } from '@angular/router';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-import {NgxMaskModule} from 'ngx-mask'
 
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -19,23 +16,23 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
 import { MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { NgxMaskModule } from 'ngx-mask';
 import { MatTableModule} from '@angular/material/table';
 import {MatGridListModule} from '@angular/material/grid-list';
+
 
 
 import { HttpClientModule } from '@angular/common/http';
 
 import { ProdutoService } from './shared/produto.service';
-
-
-
-
-
+import { CadastrarProdutoComponent } from './cadastrar-produto/cadastrar-produto.component';
+import { ListarProdutoComponent } from './listar-produto/listar-produto.component';
 
 
 @NgModule({
   declarations: [
-    ListarProdutoComponent
+    ListarProdutoComponent,
+    CadastrarProdutoComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [
@@ -57,8 +54,7 @@ import { ProdutoService } from './shared/produto.service';
       MatTableModule, 
       MatPaginatorModule,
       MatSortModule,
-      MatGridListModule
-      
+      MatGridListModule      
     ],
     providers: [
       ProdutoService,

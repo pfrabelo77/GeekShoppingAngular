@@ -11,8 +11,7 @@ import { Produto } from 'src/app/shared/produto.model';
 export class ProdutoService {
 
   url = 'https://localhost:7184/api/Produto/'; // api
-  //urlTeste = 'https://localhost:7184/api/Produto/GetProdutos'; // api rest fake
-  //urlTeste2 = 'https://localhost:7184/api/Produto/GetProdutoStr'; // api rest fake
+  
   // injetando o HttpClient
   constructor(private httpClient: HttpClient) { }
 
@@ -27,6 +26,25 @@ export class ProdutoService {
       .pipe(
         retry(2),
         catchError(this.handleError))
+  }
+
+  // Post de um Produto com as propriedades a serem filtradas 
+  // e retorna a Lista doa Produtos filtrados 
+  FindProduto(produto: Produto): Observable<Produto[]> {
+    return this.httpClient.post<Produto[]>(this.url + 'FindProduto', JSON.stringify(produto), this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
+  Cadastrar (produto: any): Observable<Produto> {
+    console.log('Cadastrar: ',JSON.stringify(produto));
+    return this.httpClient.post<Produto>(this.url + 'Create', JSON.stringify(produto), this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )  
   }
 
   // getProdutos(): Observable<string[]> {
@@ -46,15 +64,6 @@ export class ProdutoService {
   //       catchError(this.handleError)
   //     )
   // }
-
-  // // salva um carro
-  FindProduto(produto: Produto): Observable<Produto[]> {
-    return this.httpClient.post<Produto[]>(this.url + 'FindProduto', JSON.stringify(produto), this.httpOptions)
-      .pipe(
-        retry(2),
-        catchError(this.handleError)
-      )
-  }
 
   // // utualiza um carro
   // updateCar(car: Car): Observable<Car> {
