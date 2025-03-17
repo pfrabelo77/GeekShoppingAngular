@@ -9,7 +9,7 @@
 
 <form #formProduto="ngForm" >
   <div class="row">
-    <div class="col-4">
+    <div class="col-md-6">
       <label class="form-label">Nome</label>
       <input type="text" placeholder="Digite nome produto"
         [ngClass]="name.valid || (!formProduto.submitted && !(name.dirty || name.touched)) ? 'form-control ' : 'form-control is-invalid'"
@@ -18,10 +18,10 @@
         O nome dever ter no minimo 10 caracteres.
       </div>
     </div>
-    <div class="col-3">
+    <div class="col-md-3">
       <label class="form-label">Categoria</label>
       <select
-        [ngClass]="categoryName.valid || (!formProduto.submitted && !(categoryName.dirty || categoryName.touched)) ? 'form-select ' : 'form-select is-invalid'"
+        [ngClass]="categoryName.valid || (!formProduto.submitted && !(categoryName.dirty || categoryName.touched)) ? 'form-control form-select ' : 'form-control form-select is-invalid'"
         id="categoryName" name="categoryName" [(ngModel)]="produto.categoryName" #categoryName="ngModel" required>
         <option value="Roupa">Roupa</option>
         <option value="Relogio">Relogio</option>
@@ -34,19 +34,19 @@
         Categoria obrigatório.
       </div>
     </div>
-  </div>
-  <div class="col-3">
-    <label class="form-label">Nome do Arquivo imagem</label>
-    <input type="text" placeholder="exemplo: nomeArqimagem.jpg"
-      [ngClass]="imageUrl.valid || (!formProduto.submitted && !(imageUrl.dirty || imageUrl.touched)) ? 'form-control ' : 'form-control is-invalid'"
-      id="imageUrl" name="imageUrl" [(ngModel)]="produto.imageUrl" #imageUrl="ngModel" required>
-    <div class="invalid-feedback"
-      [hidden]="imageUrl.valid || (!formProduto.submitted && !(imageUrl.dirty || imageUrl.touched))">
-      Nome do Arquivo imagem obrigatório.
+    <div class="col-md-3">
+      <label class="form-label">Nome do Arquivo imagem</label>
+      <input type="text" placeholder="exemplo: nomeArqimagem.jpg"
+        [ngClass]="imageUrl.valid || (!formProduto.submitted && !(imageUrl.dirty || imageUrl.touched)) ? 'form-control ' : 'form-control is-invalid'"
+        id="imageUrl" name="imageUrl" [(ngModel)]="produto.imageUrl" #imageUrl="ngModel" required>
+      <div class="invalid-feedback"
+        [hidden]="imageUrl.valid || (!formProduto.submitted && !(imageUrl.dirty || imageUrl.touched))">
+        Nome do Arquivo imagem obrigatório.
+      </div>
     </div>
+  
   </div>
 
-  <div class="row">
     <div class="col-md-12">
       <label class="form-label">Descrição</label>
       <textarea rows="5" placeholder="Digite a descrição do produto. 500 caracteres máximo"
@@ -79,6 +79,6 @@
         </a>
       </div>
     </div>
-  </div>
+
 </form>
 {{formProduto.value | json}}  

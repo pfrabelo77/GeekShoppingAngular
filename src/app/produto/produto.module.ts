@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
 import { RouterModule } from '@angular/router';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-
-
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
+// ==== Agular Material ====  
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
@@ -22,12 +21,12 @@ import {MatGridListModule} from '@angular/material/grid-list';
 
 
 
-import { HttpClientModule } from '@angular/common/http';
-
-import { ProdutoService } from './shared/produto.service';
+// Componets do Modulo Produto
 import { CadastrarProdutoComponent } from './cadastrar-produto/cadastrar-produto.component';
 import { ListarProdutoComponent } from './listar-produto/listar-produto.component';
 
+// Services do Modulo Produto
+import { ProdutoService } from './shared/produto.service';
 
 @NgModule({
   declarations: [
@@ -60,6 +59,9 @@ import { ListarProdutoComponent } from './listar-produto/listar-produto.componen
       ProdutoService,
       NativeDateAdapter,
       { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
-    ]
+    ],exports: [
+      ListarProdutoComponent,
+      CadastrarProdutoComponent
+    ] 
 })
 export class ProdutoModule { }

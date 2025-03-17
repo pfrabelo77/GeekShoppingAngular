@@ -32,18 +32,18 @@
 
 <div class="row">
   <div class="col-6"><mat-form-field appearance="standard">
-    <mat-label>Filtrar Tablela</mat-label>
+    <mat-label>Filtrar Nome </mat-label>
     <input matInput placeholder="Digite o nome" search (keyup)="ApplyFilter($event)" #inputNome>
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-    <mat-hint>Clique aqui e digite o nome</mat-hint>
+    <mat-hint> Filtra no Font-end usando os dados já contidos na mat-table  </mat-hint>
   </mat-form-field>&nbsp;
   <span> {{dataSource.filteredData.length}} registros encontrados</span>  
 </div>
   <div class="col-6"> 
     <mat-form-field appearance="standard">
-      <mat-label>Filtrar Categoria na API(HttpPost)</mat-label>
+      <mat-label>Filtrar Categoria</mat-label>
       <input matInput placeholder="Digite a categoria" #categoryNameFiltro> 
-      <mat-hint>Digite e click "Filtrar"</mat-hint>
+      <mat-hint>Filtra no Back-end(API) e recarrega a mat-table</mat-hint>
     </mat-form-field>&nbsp;
     <input type="submit" value="Filtrar" class="btn btn-primary" (click)="FiltrarCategoria(categoryNameFiltro.value)">  
 </div>

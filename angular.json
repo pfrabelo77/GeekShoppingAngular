@@ -31,7 +31,11 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "src/assets/navbar.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -105,7 +109,6 @@
       }
     }
   },
-  
   "cli": {
     "analytics": "a6d4034e-3be0-4057-ab8f-7579f4363902"
   }
