@@ -1,8 +1,9 @@
-import { DEFAULT_CURRENCY_CODE, LOCALE_ID,NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
- import { AppRoutingModule } from './app-routing.module';
- import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+//import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 //  import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 //  import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -32,23 +33,24 @@ registerLocaleData(ptBr);
   declarations: [
     AppComponent
   ],
-  
+
   imports: [
     BrowserModule,
     AppRoutingModule,
-          HomeModule,
-         ClienteModule,
-         ProdutoModule,
-         
+    HomeModule,
+    ClienteModule,
+    ProdutoModule,
+    //FontAwesomeModule,
+
   ],
-  
+
   providers: [
-        // ************************************
-        { provide: LOCALE_ID, useValue: 'pt' },
-        // ************************************
-    
+    // ************************************
+    { provide: LOCALE_ID, useValue: 'pt' },
+    // ************************************
+
   ],
-  //schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

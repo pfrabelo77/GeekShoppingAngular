@@ -17,14 +17,15 @@ import { Produto } from 'src/app/shared/produto.model';
 export class CadastrarProdutoComponent implements OnInit {
 
   @ViewChild('formProduto', { static: true })
-  formProduto!: NgForm;
-  produto!: Produto;
+  formProduto: NgForm;
+  produto: Produto = new Produto();
 
   constructor(private produtoService: ProdutoService,
     private router: Router, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.produto = new Produto();
+    this.produto.price = null;
   }
 
   cadastrar(formProdutoValue : any): void {

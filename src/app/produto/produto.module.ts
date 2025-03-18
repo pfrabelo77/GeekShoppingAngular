@@ -27,11 +27,13 @@ import { ListarProdutoComponent } from './listar-produto/listar-produto.componen
 
 // Services do Modulo Produto
 import { ProdutoService } from './shared/produto.service';
+import { MoedaDirective } from './directives/moeda.directive';
 
 @NgModule({
   declarations: [
     ListarProdutoComponent,
-    CadastrarProdutoComponent
+    CadastrarProdutoComponent,
+    MoedaDirective
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [

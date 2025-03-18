@@ -22,7 +22,8 @@ export class ProdutoService {
 
   // Lista todos os produtos
   FindAll(): Observable<Produto[]> {
-    return this.httpClient.get<Produto[]>(this.url + 'FindAll', this.httpOptions) 
+    return this.httpClient
+      .get<Produto[]>(this.url + 'FindAll', this.httpOptions) 
       .pipe(
         retry(2),
         catchError(this.handleError))
@@ -31,7 +32,8 @@ export class ProdutoService {
   // Post de um Produto com as propriedades a serem filtradas 
   // e retorna a Lista doa Produtos filtrados 
   FindProduto(produto: Produto): Observable<Produto[]> {
-    return this.httpClient.post<Produto[]>(this.url + 'FindProduto', JSON.stringify(produto), this.httpOptions)
+    return this.httpClient
+      .post<Produto[]>(this.url + 'FindProduto', JSON.stringify(produto), this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -40,7 +42,8 @@ export class ProdutoService {
 
   Cadastrar (produto: any): Observable<Produto> {
     console.log('Cadastrar: ',JSON.stringify(produto));
-    return this.httpClient.post<Produto>(this.url + 'Create', JSON.stringify(produto), this.httpOptions)
+    return this.httpClient
+      .post<Produto>(this.url + 'Create', JSON.stringify(produto), this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -94,6 +97,6 @@ export class ProdutoService {
       errorMessage = `Código do erro: ${error.status}, ` + `menssagem: ${error.message}`;
     }
     console.log(errorMessage);
-    return throwError(errorMessage);
+    return throwError(() => new Error(errorMessage));
   };
 }

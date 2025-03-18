@@ -60,10 +60,10 @@
       </div>
     </div>
     <div class="col-md-3">
-      <label class="form-label">Preço</label>
-      <input type="text" placeholder="Digite o preço do produto"
+      <label class="form-label">Preço (R$)</label>
+      <input type="text" placeholder="Digite o preço do produto" value=""
         [ngClass]="price.valid || (!formProduto.submitted && !(price.dirty || price.touched)) ? 'form-control ' : 'form-control is-invalid'"
-        id="price" name="price" [(ngModel)]="produto.price" #price="ngModel" required>
+        id="price" name="price" [(ngModel)]="produto.price" #price="ngModel" required moeda>
       <div class="invalid-feedback"
         [hidden]="price.valid || (!formProduto.submitted && !(price.dirty || price.touched))">
         Preço obrigatório.
@@ -74,7 +74,7 @@
       <div class="text-center">
         <input type="submit" class="btn btn-success" (click)="cadastrar(formProduto.value)"  value="Cadastrar">
         &nbsp;&nbsp;
-        <a [routerLink]="['/home']" class="btn btn-primary">
+        <a [routerLink]="['/produto/FindAll']" class="btn btn-primary">
           Voltar
         </a>
       </div>
