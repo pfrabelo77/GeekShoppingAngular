@@ -2,18 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
-import { Produto } from 'src/app/shared/produto.model'; 
+import { Produto } from 'src/app/shared/produto.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProdutoService {
 
-  url = 'https://localhost:7184/api/Produto/'; // api
-  
+  url = environment.apiUrlProdutos; //URL api DEV carregada do environment.ts 'https://localhost:7184/api/Produto/'
+
+
   // injetando o HttpClient
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
   // Headers
   httpOptions = {
@@ -23,7 +26,7 @@ export class ProdutoService {
   // Lista todos os produtos
   FindAll(): Observable<Produto[]> {
     return this.httpClient
-      .get<Produto[]>(this.url + 'FindAll', this.httpOptions) 
+      .get<Produto[]>(this.url + 'FindAll', this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError))
@@ -40,14 +43,14 @@ export class ProdutoService {
       )
   }
 
-  Cadastrar (produto: any): Observable<Produto> {
-    console.log('Cadastrar: ',JSON.stringify(produto));
+  Cadastrar(produto: any): Observable<Produto> {
+    console.log('Cadastrar: ', JSON.stringify(produto));
     return this.httpClient
       .post<Produto>(this.url + 'Create', JSON.stringify(produto), this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
-      )  
+      )
   }
 
   // getProdutos(): Observable<string[]> {

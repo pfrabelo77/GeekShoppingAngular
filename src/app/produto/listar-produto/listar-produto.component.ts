@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy } 
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { ConfigService} from '../../app.config.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -25,13 +26,15 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
 
 
   constructor(private produtoService: ProdutoService,
-    private router: Router, private cdr: ChangeDetectorRef) {
+    private router: Router, private cdr: ChangeDetectorRef, private configService: ConfigService) {
+      this.titleComponentListarProdutos = this.configService.getConfig('titleComponentListarProdutos');
 
   }
 
   errosBackEnd: Erro[] = [];
   categoryNameFiltro: string = '';
   exibirTabela: boolean = true;  
+  titleComponentListarProdutos: string = '';
 
   //Variaveis para a mat-table
   ELEMENT_DATA: Produto[] = [];

@@ -1,8 +1,10 @@
-import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule, CUSTOM_ELEMENTS_SCHEMA, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ConfigService } from './app.config.service';
+import { HttpClientModule } from '@angular/common/http';
 //import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 //  import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -28,6 +30,9 @@ import { registerLocaleData } from '@angular/common';
 
 registerLocaleData(ptBr);
 // 
+export function initializeApp(configService: ConfigService) {
+  return () => configService.loadConfig();
+}
 
 @NgModule({
   declarations: [
@@ -40,15 +45,20 @@ registerLocaleData(ptBr);
     HomeModule,
     ClienteModule,
     ProdutoModule,
+    HttpClientModule
     //FontAwesomeModule,
 
   ],
 
   providers: [
-    // ************************************
+  
     { provide: LOCALE_ID, useValue: 'pt' },
-    // ************************************
-
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [ConfigService],
+      multi: true,
+    },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
