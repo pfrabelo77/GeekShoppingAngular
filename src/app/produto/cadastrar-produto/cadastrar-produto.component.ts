@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 
 import { ProdutoService } from '../shared/produto.service';
 import { Produto } from 'src/app/shared/produto.model';
+import { Erro } from 'src/app/shared/erro.model';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class CadastrarProdutoComponent implements OnInit {
   @ViewChild('formProduto', { static: true })
   formProduto: NgForm;
   produto: Produto = new Produto();
+  errosBackEnd: Erro[] = [];
 
   constructor(private produtoService: ProdutoService,
     private router: Router, private cdr: ChangeDetectorRef) { }
@@ -35,6 +37,10 @@ export class CadastrarProdutoComponent implements OnInit {
                                   console.log('Retorno Produto Cadastrado: ', data);
         
                                   this.cdr.detectChanges(); // Força a atualização da UI
+                                  if (this.produto.erros.length > 0){
+                                    this.errosBackEnd = this.produto.erros;
+                                    return;
+                                  }
                                   this.router.navigate(["produto/FindAll"]);
                                 },
                 error: (err) => console.error('Erro ao Cadastrar produto!', err)

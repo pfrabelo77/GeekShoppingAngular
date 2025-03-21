@@ -7,7 +7,16 @@
   </div>
 </div>
 
-<form #formProduto="ngForm" >
+<div class="alert alert-danger" role="alert" *ngIf="errosBackEnd.length > 0">
+  Erros de validação Backend. Tente novamente.
+  <ul >
+    <li *ngFor="let erro of errosBackEnd"> {{ erro.mensagem }} </li>
+  </ul>  
+</div>
+
+<br />
+
+<form #formProduto="ngForm">
   <div class="row">
     <div class="col-md-6">
       <label class="form-label">Nome</label>
@@ -16,7 +25,11 @@
         value="" id="name" name="name" [(ngModel)]="produto.name" #name="ngModel" minlength="10" required>
       <div class="invalid-feedback" [hidden]="name.valid || (!formProduto.submitted && !(name.dirty || name.touched))">
         O nome dever ter no minimo 10 caracteres.
+        <!-- <ul>
+          <li *ngFor="let erro of produto.erros.filter(e => e.campo == 'name')"> {{ erro.mensagem }} </li>
+        </ul> -->
       </div>
+
     </div>
     <div class="col-md-3">
       <label class="form-label">Categoria</label>
@@ -44,41 +57,42 @@
         Nome do Arquivo imagem obrigatório.
       </div>
     </div>
-  
+
   </div>
 
-    <div class="col-md-12">
-      <label class="form-label">Descrição</label>
-      <textarea rows="5" placeholder="Digite a descrição do produto. 500 caracteres máximo"
-        [ngClass]="description.valid || (!formProduto.submitted && !(description.dirty || description.touched)) ? 'form-control ' : 'form-control is-invalid'"
-        id="description" name="description" [(ngModel)]="produto.description" #description="ngModel" required
-        maxlength="500">
+  <div class="col-md-12">
+    <label class="form-label">Descrição</label>
+    <textarea rows="5" placeholder="Digite a descrição do produto. 500 caracteres máximo"
+      [ngClass]="description.valid || (!formProduto.submitted && !(description.dirty || description.touched)) ? 'form-control ' : 'form-control is-invalid'"
+      id="description" name="description" [(ngModel)]="produto.description" #description="ngModel" required
+      maxlength="500">
             </textarea>
-      <div class="invalid-feedback"
-        [hidden]="description.valid || (!formProduto.submitted && !(description.dirty || description.touched))">
-        Descrição obrigatório.
-      </div>
+    <div class="invalid-feedback"
+      [hidden]="description.valid || (!formProduto.submitted && !(description.dirty || description.touched))">
+      Descrição obrigatório.
     </div>
-    <div class="col-md-3">
-      <label class="form-label">Preço (R$)</label>
-      <input type="text" placeholder="Digite o preço do produto" value=""
-        [ngClass]="price.valid || (!formProduto.submitted && !(price.dirty || price.touched)) ? 'form-control ' : 'form-control is-invalid'"
-        id="price" name="price" [(ngModel)]="produto.price" #price="ngModel" required moeda>
-      <div class="invalid-feedback"
-        [hidden]="price.valid || (!formProduto.submitted && !(price.dirty || price.touched))">
-        Preço obrigatório.
-      </div>
+  </div>
+  <div class="col-md-3">
+    <label class="form-label">Preço (R$)</label>
+    <input type="text" placeholder="Digite o preço do produto" value=""
+      [ngClass]="price.valid || (!formProduto.submitted && !(price.dirty || price.touched)) ? 'form-control ' : 'form-control is-invalid'"
+      id="price" name="price" [(ngModel)]="produto.price" #price="ngModel" required moeda>
+    <div class="invalid-feedback" [hidden]="price.valid || (!formProduto.submitted && !(price.dirty || price.touched))">
+      Preço obrigatório.
     </div>
-    <div class="col-12">
-      <br />
-      <div class="text-center">
-        <input type="submit" class="btn btn-success" (click)="cadastrar(formProduto.value)"  value="Cadastrar">
-        &nbsp;&nbsp;
-        <a [routerLink]="['/produto/FindAll']" class="btn btn-primary">
-          Voltar
-        </a>
-      </div>
+  </div>
+  <div class="col-12">
+    <br />
+    <div class="text-center">
+      <input type="submit" class="btn btn-success" (click)="cadastrar(formProduto.value)" value="Cadastrar">
+      &nbsp;&nbsp;
+      <a [routerLink]="['/produto/FindAll']" class="btn btn-primary">
+        Voltar
+      </a>
     </div>
+  </div>
 
 </form>
-{{formProduto.value | json}}  
+{{formProduto.value | json}}
+<br />
+{{produto | json}}

@@ -7,5 +7,5 @@ export class Produto {
      description: string;
      categoryName: string;
      imageUrl: string;
-     erros?: Erro[]; 
+     erros?: Erro[] = []; 
 }

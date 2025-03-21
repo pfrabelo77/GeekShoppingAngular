@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy } 
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { ConfigService} from '../../app.config.service';
+import { ConfigService } from '../../app.config.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -27,14 +27,14 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
 
   constructor(private produtoService: ProdutoService,
     private router: Router, private cdr: ChangeDetectorRef, private configService: ConfigService) {
-      this.titleComponentListarProdutos = this.configService.getConfig('titleComponentListarProdutos');
+    this.titleComponentListarProdutos = this.configService.getConfig('titleComponentListarProdutos');
 
   }
 
-  errosBackEnd: Erro[] = [];
   categoryNameFiltro: string = '';
-  exibirTabela: boolean = true;  
+  exibirTabela: boolean = true;
   titleComponentListarProdutos: string = '';
+  isLoading: boolean = true;
 
   //Variaveis para a mat-table
   ELEMENT_DATA: Produto[] = [];
@@ -42,6 +42,7 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Produto>(this.ELEMENT_DATA);
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.produtoService.FindAll().subscribe({
       next: (data) => {
         this.ELEMENT_DATA = data;
@@ -49,10 +50,13 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource<Produto>(this.ELEMENT_DATA);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-
+        this.isLoading = false;  // Set loading to false when data is received
         this.cdr.detectChanges(); // Força a atualização da UI
       },
-      error: (err) => console.error('Erro ao buscar produtos', err)
+      error: (err) => {
+        console.error('Erro ao buscar produtos', err)
+        this.isLoading = false;  // Set loading to false when data is received
+      }
     });
 
 
@@ -72,7 +76,9 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
   }
 
   FiltrarCategoria(categoryNameStr: string) {
-    let produtoFiltro: Produto = { categoryName: categoryNameStr, description: '', id: null, imageUrl: '', name: '', price: 0 };
+    this.isLoading = true;
+    if (categoryNameStr == '') {categoryNameStr = null;} // Se for vazio, passa null e desconsidera o filtro
+    let produtoFiltro: Produto = { categoryName: categoryNameStr, description: null, id: null, imageUrl: null, name: null, price: null };
     console.log('Retorno Categoria: ', produtoFiltro);
     this.produtoService.FindProduto(produtoFiltro).subscribe({
       next: (data) => {
@@ -81,10 +87,14 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource<Produto>(this.ELEMENT_DATA);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-
+        this.isLoading = false;
         this.cdr.detectChanges(); // Força a atualização da UI
       },
-      error: (err) => console.error('Erro ao buscar Filtrar produtos Categoria', err)
+      error: (err) => {
+        console.error('Erro ao buscar Filtrar produtos Categoria', err)
+        this.isLoading = false;  // Set loading to false when data is received
+      }
+
     });
   }
 
