@@ -95,6 +95,23 @@
     }
 
     .topnav {
+      list-style-type: none;
+      /* display: inline-block; */
+      z-index: 1000;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+
+    .topnav {
+      float: left;
+    }
+
+    .topnav {
       overflow: hidden;
       background-color: #333;
     }
@@ -170,7 +187,20 @@
       background-color: #555;
       /* height: 500px; */
       color: white;
-      border-radius: 10px;
+      /* border-radius: 0px; */
+    }
+
+    .mobile-container {
+      list-style-type: none;
+      /* display: inline-block; */
+      z-index: 1000;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+      position: fixed;
+      top: 0;
+      width: 100%;
     }
 
     .topnavMob {
@@ -207,6 +237,7 @@
     .topnavMob {
       background-color: #04AA6D;
       color: white;
+    }
   </style>
 </head>
 
@@ -242,6 +273,9 @@
         d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
       <path
         d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+    </symbol>
+    <symbol id="hamburger" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>    
     </symbol>
   </svg>
 
@@ -281,8 +315,8 @@
       Clientes Listar
     </a>
   </div>
-  <div class="mobile-container" id="myTopnavMob">
-    <div class="topnavMob">
+  <div class="mobile-container" id="myTopnavMob" >
+    <div class="topnavMob" >
       <a href="#about">
         <img height="20px" style="background-color: white;padding-right: 1px;"
           src="../assets/images//geek_shopping.png" />
@@ -326,14 +360,16 @@
         </a>
       </div>
       <a href="javascript:void(0);" class="icon" onclick="myFunction2()">
-        <i class="fa fa-bars"></i>
-      </a>
+        <svg class="bi pe-none me-2" width="16" height="16">
+          <use xlink:href="#hamburger" />
+        </svg>
+        </a>
     </div>
   </div>
 
   <main class="d-flex flex-nowrap">
 
-    <div style="margin: 15px;width:100vw;">
+    <div style="padding-top:60px;margin-top:60px;margin: 15px;width:100vw;">
       <router-outlet></router-outlet>
     </div>
   </main>

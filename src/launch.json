@@ -1,0 +1,12 @@
+{
+  "configurations": [
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Launch Angular App",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/src",
+      "preLaunchTask": "npm: start"
+    }
+  ]
+}

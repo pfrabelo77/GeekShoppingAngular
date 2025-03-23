@@ -45,7 +45,7 @@
     <div class="col-6"><mat-form-field appearance="standard">
         <mat-label>Filtrar Nome </mat-label>
         <input matInput placeholder="Digite o nome" search (keyup)="ApplyFilter($event)" #inputNome>
-        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
         <mat-hint> Filtra no Font-end usando os dados já contidos na mat-table </mat-hint>
       </mat-form-field>&nbsp;
       <span> {{dataSource.filteredData.length}} registros encontrados</span>
@@ -62,7 +62,7 @@
   <br>
     <div *ngIf="isLoading"><img height="40px" style="padding-right: 5px;"
       src="../../../assets/images/load_icon.gif" />Carregando Aguarde ...</div>
-  <div *ngIf="!isLoading">
+  <div [hidden]="isLoading">
     <div class="mat-elevation-z8" *ngIf="exibirTabela">
       <table mat-table matSort [dataSource]="dataSource" class="demo-table">
 
