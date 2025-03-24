@@ -9,9 +9,9 @@
 
 <div class="alert alert-danger" role="alert" *ngIf="errosBackEnd.length > 0">
   Erros de validação Backend. Tente novamente.
-  <ul >
+  <ul>
     <li *ngFor="let erro of errosBackEnd"> {{ erro.mensagem }} </li>
-  </ul>  
+  </ul>
 </div>
 
 <br />
@@ -22,9 +22,9 @@
       <label class="form-label">Nome</label>
       <input type="text" placeholder="Digite nome produto"
         [ngClass]="name.valid || (!formProduto.submitted && !(name.dirty || name.touched)) ? 'form-control ' : 'form-control is-invalid'"
-        value="" id="name" name="name" [(ngModel)]="produto.name" #name="ngModel" minlength="10" required>
+        value="" id="name" name="name" [(ngModel)]="produto.name" #name="ngModel" minlength="5" required>
       <div class="invalid-feedback" [hidden]="name.valid || (!formProduto.submitted && !(name.dirty || name.touched))">
-        O nome dever ter no minimo 10 caracteres.
+        O nome dever ter no minimo 5 caracteres.
         <!-- <ul>
           <li *ngFor="let erro of produto.erros.filter(e => e.campo == 'name')"> {{ erro.mensagem }} </li>
         </ul> -->
@@ -84,6 +84,9 @@
   <div class="col-12">
     <br />
     <div class="text-center">
+      <div *ngIf="isLoading"><img height="40px" style="padding-right: 5px;"
+          src="../../../assets/images/load_icon.gif" />Cadastrando Aguarde ...
+      </div>
       <input type="submit" class="btn btn-success" (click)="cadastrar(formProduto.value)" value="Cadastrar">
       &nbsp;&nbsp;
       <a [routerLink]="['/produto/FindAll']" class="btn btn-primary">

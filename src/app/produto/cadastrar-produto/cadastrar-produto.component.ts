@@ -21,6 +21,8 @@ export class CadastrarProdutoComponent implements OnInit {
   formProduto: NgForm;
   produto: Produto = new Produto();
   errosBackEnd: Erro[] = [];
+  isLoading: boolean = false;
+
 
   constructor(private produtoService: ProdutoService,
     private router: Router, private cdr: ChangeDetectorRef) { }
@@ -30,26 +32,36 @@ export class CadastrarProdutoComponent implements OnInit {
     this.produto.price = null;
   }
 
-  cadastrar(formProdutoValue : any): void {
+  cadastrar(formProdutoValue: any): void {
     if (this.formProduto.form.valid) {
+      this.isLoading = true;
       this.produtoService.Cadastrar(formProdutoValue).subscribe({
-                next: (data) => { this.produto = data; 
-                                  console.log('Retorno Produto Cadastrado: ', data);
-        
-                                  this.cdr.detectChanges(); // Força a atualização da UI
-                                  if (this.produto.erros.length > 0){
-                                    this.errosBackEnd = this.produto.erros;
-                                    return;
-                                  }
-                                  this.router.navigate(["produto/FindAll"]);
-                                },
-                error: (err) => console.error('Erro ao Cadastrar produto!', err)
-              });
-      
+        next: (data) => {
+          this.produto = data;
+          console.log('Retorno Produto Cadastrado: ', data);
+
+          if (this.produto.erros.length > 0) {
+            this.errosBackEnd = this.produto.erros;
+            this.isLoading = false;  // Set loading to false when data is received
+            this.cdr.detectChanges(); // Força a atualização da UI 
+            return;
+          } 
+          else 
+          {
+            this.router.navigate(["produto/FindAll"]);
+          }
+
+        },
+        error: (err) => {
+          console.error('Erro ao Cadstrar produto', err)
+          this.isLoading = false;  // Set loading to false when data is received
+        }
+      });
+
     }
   }
 
- 
+
 
 
 }

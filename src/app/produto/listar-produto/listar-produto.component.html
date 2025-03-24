@@ -60,8 +60,9 @@
     </div>
   </div>
   <br>
-    <div *ngIf="isLoading"><img height="40px" style="padding-right: 5px;"
-      src="../../../assets/images/load_icon.gif" />Carregando Aguarde ...</div>
+  <div *ngIf="isLoading"><img height="40px" style="padding-right: 5px;"
+      src="../../../assets/images/load_icon.gif" />Carregando Aguarde ...
+  </div>
   <div [hidden]="isLoading">
     <div class="mat-elevation-z8" *ngIf="exibirTabela">
       <table mat-table matSort [dataSource]="dataSource" class="demo-table">
