@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ConfigService } from './app.config.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './shared/auth.interceptor';
 //import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 //  import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -51,7 +54,7 @@ export function initializeApp(configService: ConfigService) {
   ],
 
   providers: [
-  
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'pt' },
     {
       provide: APP_INITIALIZER,
@@ -59,6 +62,7 @@ export function initializeApp(configService: ConfigService) {
       deps: [ConfigService],
       multi: true,
     },
+    [CookieService]
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
