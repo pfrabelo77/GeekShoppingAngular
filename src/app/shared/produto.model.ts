@@ -1,4 +1,6 @@
+import { Byte } from "@angular/compiler/src/util";
 import { Erro } from "./erro.model";
+import { ImageUpload } from "./imageupload.model";
 
 export class Produto {
     id: string;
@@ -7,5 +9,6 @@ export class Produto {
     description: string;
     categoryName: string;
     imageUrl: string;
+    imageUpload?: ImageUpload | null = null;  
     erros?: Erro[] = [];
 }

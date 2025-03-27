@@ -43,7 +43,7 @@ export class ProdutoService {
       )
   }
 
-  Cadastrar(produto: any): Observable<Produto> {
+  Cadastrar(produto: Produto): Observable<Produto> {
     console.log('Cadastrar: ', JSON.stringify(produto));
     return this.httpClient
       .post<Produto>(this.url + 'Create', JSON.stringify(produto), this.httpOptions)
@@ -51,6 +51,15 @@ export class ProdutoService {
         retry(2),
         catchError(this.handleError)
       )
+  }
+
+  uploadImage(base64Image: string, fileName: string): Observable<any> {
+    const payload = { fileName, base64Image };
+    return this.httpClient.post(this.url + 'UploadImage', payload);
+  }
+
+  getImage(id: string): Observable<any> {
+    return this.httpClient.get(`${this.url + 'GetImage'}/${id}`);
   }
 
   // getProdutos(): Observable<string[]> {

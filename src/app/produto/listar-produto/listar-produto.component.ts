@@ -38,7 +38,7 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
 
   //Variaveis para a mat-table
   ELEMENT_DATA: Produto[] = [];
-  displayedColumns: string[] = ['name', 'price', 'description', 'categoryName', 'imageUrl', 'id'];
+  displayedColumns: string[] = ['name', 'price', 'description', 'categoryName', 'imageUrl','id'];
   dataSource = new MatTableDataSource<Produto>(this.ELEMENT_DATA);
 
   ngOnInit(): void {

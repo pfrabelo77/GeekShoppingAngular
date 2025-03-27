@@ -31,7 +31,7 @@
       </div>
 
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
       <label class="form-label">Categoria</label>
       <select
         [ngClass]="categoryName.valid || (!formProduto.submitted && !(categoryName.dirty || categoryName.touched)) ? 'form-control form-select ' : 'form-control form-select is-invalid'"
@@ -47,19 +47,19 @@
         Categoria obrigatório.
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <label class="form-label">Nome do Arquivo imagem</label>
-      <input type="text" placeholder="exemplo: nomeArqimagem.jpg"
+      <input type="file" (change)="onFileSelected($event)"
         [ngClass]="imageUrl.valid || (!formProduto.submitted && !(imageUrl.dirty || imageUrl.touched)) ? 'form-control ' : 'form-control is-invalid'"
         id="imageUrl" name="imageUrl" [(ngModel)]="produto.imageUrl" #imageUrl="ngModel" required>
+      <!-- <button (click)="onUpload()">Upload</button> -->
       <div class="invalid-feedback"
         [hidden]="imageUrl.valid || (!formProduto.submitted && !(imageUrl.dirty || imageUrl.touched))">
         Nome do Arquivo imagem obrigatório.
       </div>
     </div>
-
+  
   </div>
-
   <div class="col-md-12">
     <label class="form-label">Descrição</label>
     <textarea rows="5" placeholder="Digite a descrição do produto. 500 caracteres máximo"
@@ -96,6 +96,14 @@
   </div>
 
 </form>
+<br />
+<input type="file" (change)="onFileSelected($event)">
+<a  target="_blank" (click)="onUpload()">Upload</a>
+<br/>
+<img [src]="imageUrl2" alt="Imagem carregada">
+<img src="https://localhost:7184/api/produto/getimage/75505ff5-e800-4b1c-af78-ea8f50aa2fd4" alt="Imagem carregada src">
 {{formProduto.value | json}}
 <br />
 {{produto | json}}
+<br/>
+{{imageUrl}}
