@@ -11,6 +11,7 @@ import { ProdutoService } from '../shared/produto.service';
 import { Produto } from 'src/app/shared/produto.model';
 import { Erro } from 'src/app/shared/erro.model';
 
+
 @Component({
   selector: 'app-listar-produto',
   templateUrl: './listar-produto.component.html',
@@ -35,6 +36,8 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
   exibirTabela: boolean = true;
   titleComponentListarProdutos: string = '';
   isLoading: boolean = true;
+  produtoModal: Produto = new Produto();
+  produtoDeletado: boolean = false;
 
   //Variaveis para a mat-table
   ELEMENT_DATA: Produto[] = [];
@@ -42,6 +45,25 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Produto>(this.ELEMENT_DATA);
 
   ngOnInit(): void {
+
+      this.FindAll();
+
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  ApplyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  FindAll(){
     this.isLoading = true;
     this.produtoService.FindAll().subscribe({
       next: (data) => {
@@ -59,20 +81,6 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
       }
     });
 
-
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  ApplyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
   FiltrarCategoria(categoryNameStr: string) {
@@ -96,6 +104,46 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
       }
 
     });
+  }
+
+  Deletar() {
+    this.produtoModal.name = "Carregando Produto ... ";
+    this.produtoModal.price = null;
+    this.produtoModal.description = null;  
+    this.produtoModal.categoryName = null;  
+
+    this.isLoading = true;
+    this.cdr.detectChanges(); // Força a atualização da UI
+    this.produtoService.Deletar(this.produtoModal.id).subscribe({
+      next: (data) => {
+        this.produtoDeletado = data;
+        console.log('Retorno Deletar: ', data);
+        this.FindAll();
+        this.isLoading = false;
+        this.cdr.detectChanges(); // Força a atualização da UI
+      },
+      error: (err) => {
+        console.error('Erro ao buscar Filtrar produtos Categoria', err)
+        this.isLoading = false;  // Set loading to false when data is received
+      }
+
+    });
+  }
+
+  CarregarProdutoModal(id :string){
+    console.log('CarregarProdutoModal: ', id);
+    
+    this.produtoService.FindById(id).subscribe({
+      next: (data) => {
+        this.produtoModal = data;
+        console.log('CarregarProdutoModal: ', data);
+         this.cdr.detectChanges(); // Força a atualização da UI
+      },
+      error: (err) => {
+        console.error('Erro ao buscar produtos', err)
+      }
+    });
+   
   }
 
 

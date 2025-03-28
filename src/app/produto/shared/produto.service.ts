@@ -53,6 +53,24 @@ export class ProdutoService {
       )
   }
 
+  FindById(id: string): Observable<Produto> {
+      return this.httpClient
+      .get<Produto>(this.url + 'FindById/' + id, this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
+  Deletar(id: string): Observable<boolean> {
+    return this.httpClient
+    .delete<boolean>(this.url + 'Delete/' + id, this.httpOptions)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+}
+
   uploadImage(base64Image: string, fileName: string): Observable<any> {
     const payload = { fileName, base64Image };
     return this.httpClient.post(this.url + 'UploadImage', payload);

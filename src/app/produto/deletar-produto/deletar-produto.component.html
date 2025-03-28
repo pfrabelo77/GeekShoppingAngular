@@ -1,0 +1,39 @@
+<!-- The Modal -->
+<div class="modal" id="myModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h1 class="modal-title">Deseja deletar este produto?</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6">
+						<div> <img width="200"
+							style="background-color: white;padding-right: 1px;border:1px;border-color: black;"
+							[src]="'https://localhost:7184/api/produto/getimage/'+ produtoModal.id" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div><b>Nome:</b> &nbsp; {{produtoModal.name}}</div>
+						<div><b>Categoria:</b> &nbsp; {{produtoModal.categoryName}}</div>
+						<div><b>Descrição:</b></div>
+						<p>{{produtoModal.description}}</p>
+						<p><b>Preço:</b> &nbsp;{{produtoModal.price | currency : 'BRL'}}</p>
+					</div>
+				</div>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+					(click)="DeletarModal()">Deletar</button>
+				&nbsp;
+				<button type="button" class="btn btn-info" data-bs-dismiss="modal">Cancelar</button>
+			</div>
+
+		</div>
+	</div>
+</div>

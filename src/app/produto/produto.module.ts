@@ -24,16 +24,19 @@ import {MatGridListModule} from '@angular/material/grid-list';
 // Componets do Modulo Produto
 import { CadastrarProdutoComponent } from './cadastrar-produto/cadastrar-produto.component';
 import { ListarProdutoComponent } from './listar-produto/listar-produto.component';
+import { DeletarProdutoComponent } from './deletar-produto/deletar-produto.component';
 
 // Services do Modulo Produto
 import { ProdutoService } from './shared/produto.service';
 import { MoedaDirective } from './directives/moeda.directive';
 
+
 @NgModule({
   declarations: [
     ListarProdutoComponent,
     CadastrarProdutoComponent,
-    MoedaDirective
+    MoedaDirective,
+    DeletarProdutoComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [
