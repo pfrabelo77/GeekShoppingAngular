@@ -58,7 +58,7 @@
         Nome do Arquivo imagem obrigatório.
       </div>
     </div>
-  
+
   </div>
   <div class="col-md-12">
     <label class="form-label">Descrição</label>
@@ -96,14 +96,3 @@
   </div>
 
 </form>
-<br />
-<input type="file" (change)="onFileSelected($event)">
-<a  target="_blank" (click)="onUpload()">Upload</a>
-<br/>
-<img [src]="imageUrl2" alt="Imagem carregada">
-<img src="https://localhost:7184/api/produto/getimage/75505ff5-e800-4b1c-af78-ea8f50aa2fd4" alt="Imagem carregada src">
-{{formProduto.value | json}}
-<br />
-{{produto | json}}
-<br/>
-{{imageUrl}}

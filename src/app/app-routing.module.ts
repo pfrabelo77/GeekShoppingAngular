@@ -31,7 +31,11 @@ const routes: Routes = [
 	{ 
 		path: 'produto/FindAll',
 		component: ListarProdutoComponent	 
-	}, 
+	},
+	{
+		path: 'produto/FindAll/:mensagemSucesso',
+		component: ListarProdutoComponent
+	  }, 
 	{ 
 		path: 'produto/cadastrar',
 		component: CadastrarProdutoComponent	 

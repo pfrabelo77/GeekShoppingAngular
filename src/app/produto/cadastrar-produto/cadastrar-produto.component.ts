@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -24,9 +24,7 @@ export class CadastrarProdutoComponent implements OnInit {
   errosBackEnd: Erro[] = [];
   isLoading: boolean = false;
   imageUpload: ImageUpload = new ImageUpload();
-  imageUrl: string = 'https://localhost:7184/api/produto/getimage';
-  imageUrl2: string = 'https://localhost:7184/api/produto/getimage/75505ff5-e800-4b1c-af78-ea8f50aa2fd4';
-  
+
 
   constructor(private produtoService: ProdutoService,
     private router: Router, private cdr: ChangeDetectorRef) { }
@@ -36,6 +34,7 @@ export class CadastrarProdutoComponent implements OnInit {
     this.produto.price = null;
   }
 
+  
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -52,24 +51,24 @@ export class CadastrarProdutoComponent implements OnInit {
     };
   }
 
-  onUpload() {
-    if (this.imageUpload.fileName && this.imageUpload.base64Image) {
-      this.produtoService.uploadImage(this.imageUpload.base64Image, this.imageUpload.fileName).subscribe(response => {
-        this.imageUrl = response.base64Image;
-        console.log('Upload realizado com sucesso!', response);
-        this.cdr.detectChanges(); // Força a atualização da UI 
-      });
-    }
-  }
+  // onUpload() {
+  //   if (this.imageUpload.fileName && this.imageUpload.base64Image) {
+  //     this.produtoService.uploadImage(this.imageUpload.base64Image, this.imageUpload.fileName).subscribe(response => {
+  //       this.imageUrl = response.base64Image;
+  //       console.log('Upload realizado com sucesso!', response);
+  //       this.cdr.detectChanges(); // Força a atualização da UI 
+  //     });
+  //   }
+  // }
 
-  
 
-getImage(id: string) {
-  this.produtoService.getImage(id).subscribe(response => {
-    this.imageUrl = response.base64Image;
-  });
-}
-  
+
+  // getImage(id: string) {
+  //   this.produtoService.getImage(id).subscribe(response => {
+  //     this.imageUrl = response.base64Image;
+  //   });
+  // }
+
   cadastrar(formProdutoValue: any): void {
     if (this.formProduto.form.valid) {
       this.isLoading = true;
@@ -77,22 +76,21 @@ getImage(id: string) {
       if (this.imageUpload.fileName && this.imageUpload.base64Image) {
         this.produto.imageUpload = this.imageUpload;
       }
-      console.log('Cadastrar Produto request: ', this.produto);    
+      //console.log('Cadastrar Produto request: ', this.produto);    
       this.produtoService.Cadastrar(this.produto).subscribe({
         next: (data) => {
           this.produto = data;
-          console.log('Cadastrar Produto response: ', data);
+          //console.log('Cadastrar Produto response: ', data);
 
           if (this.produto.erros.length > 0) {
             this.errosBackEnd = this.produto.erros;
             this.isLoading = false;  // Set loading to false when data is received
-            this.cdr.detectChanges(); // Força a atualização da UI 
+           this.cdr.detectChanges(); // Força a atualização da UI 
             return;
-          } 
-          else 
-          {
+          }
+          else {
             //this.doUpload(this.produto.id);
-            this.router.navigate(["produto/FindAll"]);
+            this.router.navigate(["produto/FindAll/" + "Produto Cadastrado com sucesso!"] );
           }
 
         },

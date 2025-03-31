@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router , ActivatedRoute} from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../app.config.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,6 +10,8 @@ import { MatSort } from '@angular/material/sort';
 import { ProdutoService } from '../shared/produto.service';
 import { Produto } from 'src/app/shared/produto.model';
 import { Erro } from 'src/app/shared/erro.model';
+import { environment } from 'src/environments/environment';
+
 
 
 @Component({
@@ -27,7 +29,7 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
 
 
   constructor(private produtoService: ProdutoService,
-    private router: Router, private cdr: ChangeDetectorRef, private configService: ConfigService) {
+    private router: Router, private route: ActivatedRoute, private cdr: ChangeDetectorRef, private configService: ConfigService) {
     this.titleComponentListarProdutos = this.configService.getConfig('titleComponentListarProdutos');
 
   }
@@ -38,6 +40,9 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
   isLoading: boolean = true;
   produtoModal: Produto = new Produto();
   produtoDeletado: boolean = false;
+  mensagemSucesso: string = '';
+  urlApi = environment.apiUrlProdutos; //URL api DEV carregada do environment.ts 'https://localhost:7184/api/Produto/'
+  
 
   //Variaveis para a mat-table
   ELEMENT_DATA: Produto[] = [];
@@ -45,7 +50,13 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Produto>(this.ELEMENT_DATA);
 
   ngOnInit(): void {
-
+      
+    let msgSucesso = this.route.snapshot.paramMap.get('mensagemSucesso');
+    console.log('Mensagem Sucesso: ', msgSucesso);
+    if (msgSucesso != null && msgSucesso != undefined) {
+      this.exibirMensagemSucesso(msgSucesso);
+    }
+    
       this.FindAll();
 
   }
@@ -53,6 +64,15 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  exibirMensagemSucesso(msgSucesso :string) {
+    //console.log('exibirMensagemSucesso: ', msgSucesso);
+    this.mensagemSucesso = msgSucesso;
+    setTimeout(() => {
+      this.mensagemSucesso = '';
+      this.cdr.detectChanges();
+    }, 4000); // Tempo em milissegundos (3 segundos)
   }
 
   ApplyFilter(event: Event) {
@@ -113,6 +133,7 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
     this.produtoModal.categoryName = null;  
 
     this.isLoading = true;
+    this.mensagemSucesso = '';
     this.cdr.detectChanges(); // Força a atualização da UI
     this.produtoService.Deletar(this.produtoModal.id).subscribe({
       next: (data) => {
@@ -120,6 +141,7 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
         console.log('Retorno Deletar: ', data);
         this.FindAll();
         this.isLoading = false;
+        this.exibirMensagemSucesso('Produto deletado com sucesso!');
         this.cdr.detectChanges(); // Força a atualização da UI
       },
       error: (err) => {
