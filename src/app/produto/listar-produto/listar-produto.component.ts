@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
-import { Router , ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../app.config.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,6 +11,8 @@ import { ProdutoService } from '../shared/produto.service';
 import { Produto } from 'src/app/shared/produto.model';
 import { Erro } from 'src/app/shared/erro.model';
 import { environment } from 'src/environments/environment';
+import { MessageService } from 'src/app/shared/message.service';
+
 
 
 
@@ -29,7 +31,11 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
 
 
   constructor(private produtoService: ProdutoService,
-    private router: Router, private route: ActivatedRoute, private cdr: ChangeDetectorRef, private configService: ConfigService) {
+    private router: Router,
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
+    private configService: ConfigService,
+    private messageService: MessageService) {
     this.titleComponentListarProdutos = this.configService.getConfig('titleComponentListarProdutos');
 
   }
@@ -42,22 +48,28 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
   produtoDeletado: boolean = false;
   mensagemSucesso: string = '';
   urlApi = environment.apiUrlProdutos; //URL api DEV carregada do environment.ts 'https://localhost:7184/api/Produto/'
-  
+
 
   //Variaveis para a mat-table
   ELEMENT_DATA: Produto[] = [];
-  displayedColumns: string[] = ['name', 'price', 'description', 'categoryName', 'imageUrl','id'];
+  displayedColumns: string[] = ['name', 'price', 'description', 'categoryName', 'imageUrl', 'id'];
   dataSource = new MatTableDataSource<Produto>(this.ELEMENT_DATA);
 
   ngOnInit(): void {
-      
+
+    //Mensagem de sucesso passada pela url no Cadastrar
     let msgSucesso = this.route.snapshot.paramMap.get('mensagemSucesso');
     console.log('Mensagem Sucesso: ', msgSucesso);
     if (msgSucesso != null && msgSucesso != undefined) {
       this.exibirMensagemSucesso(msgSucesso);
     }
-    
-      this.FindAll();
+
+      //Mensagem de sucesso passada pelo MessageService no Alterar
+    this.messageService.currentMessage.subscribe((msg) => {
+      this.exibirMensagemSucesso(msg);
+    });
+
+    this.FindAll();
 
   }
 
@@ -66,7 +78,7 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  exibirMensagemSucesso(msgSucesso :string) {
+  exibirMensagemSucesso(msgSucesso: string) {
     //console.log('exibirMensagemSucesso: ', msgSucesso);
     this.mensagemSucesso = msgSucesso;
     setTimeout(() => {
@@ -83,7 +95,7 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
     }
   }
 
-  FindAll(){
+  FindAll() {
     this.isLoading = true;
     this.produtoService.FindAll().subscribe({
       next: (data) => {
@@ -105,7 +117,7 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
 
   FiltrarCategoria(categoryNameStr: string) {
     this.isLoading = true;
-    if (categoryNameStr == '') {categoryNameStr = null;} // Se for vazio, passa null e desconsidera o filtro
+    if (categoryNameStr == '') { categoryNameStr = null; } // Se for vazio, passa null e desconsidera o filtro
     let produtoFiltro: Produto = { categoryName: categoryNameStr, description: null, id: null, imageUrl: null, name: null, price: null };
     console.log('Retorno Categoria: ', produtoFiltro);
     this.produtoService.FindProduto(produtoFiltro).subscribe({
@@ -129,8 +141,8 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
   Deletar() {
     this.produtoModal.name = "Carregando Produto ... ";
     this.produtoModal.price = null;
-    this.produtoModal.description = null;  
-    this.produtoModal.categoryName = null;  
+    this.produtoModal.description = null;
+    this.produtoModal.categoryName = null;
 
     this.isLoading = true;
     this.mensagemSucesso = '';
@@ -152,20 +164,20 @@ export class ListarProdutoComponent implements OnInit, AfterViewInit {
     });
   }
 
-  CarregarProdutoModal(id :string){
+  CarregarProdutoModal(id: string) {
     console.log('CarregarProdutoModal: ', id);
-    
+
     this.produtoService.FindById(id).subscribe({
       next: (data) => {
         this.produtoModal = data;
         console.log('CarregarProdutoModal: ', data);
-         this.cdr.detectChanges(); // Força a atualização da UI
+        this.cdr.detectChanges(); // Força a atualização da UI
       },
       error: (err) => {
         console.error('Erro ao buscar produtos', err)
       }
     });
-   
+
   }
 
 

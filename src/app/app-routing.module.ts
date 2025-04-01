@@ -6,6 +6,7 @@ import { CadastrarComponent } from './cliente/cadastrar/cadastrar.component';
 import { ListarComponent } from './cliente/listar/listar.component';	
 import { ListarProdutoComponent } from './produto/listar-produto/listar-produto.component';
 import { CadastrarProdutoComponent } from './produto/cadastrar-produto/cadastrar-produto.component';
+import { AlterarProdutoComponent } from './produto/alterar-produto/alterar-produto.component';
 
 const routes: Routes = [
   { path: '', 
@@ -39,6 +40,11 @@ const routes: Routes = [
 	{ 
 		path: 'produto/cadastrar',
 		component: CadastrarProdutoComponent	 
+	}
+	, 
+	{ 
+		path: 'produto/alterar/:id',
+		component: AlterarProdutoComponent	 
 	}
 ];
 
