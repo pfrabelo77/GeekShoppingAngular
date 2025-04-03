@@ -71,9 +71,9 @@ export class ProdutoService {
     )
 }
 
-  uploadImage(base64Image: string, fileName: string): Observable<any> {
+PreviewImage(base64Image: string, fileName: string): Observable<any> {
     const payload = { fileName, base64Image };
-    return this.httpClient.post(this.url + 'UploadImage', payload);
+    return this.httpClient.post(this.url + 'PreviewImage', payload);
   }
 
   getImage(id: string): Observable<any> {

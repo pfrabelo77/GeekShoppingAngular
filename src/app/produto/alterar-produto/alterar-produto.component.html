@@ -1,2 +1,108 @@
+<div class="alert alert-info d-flex align-items-center" role="alert">
+    <svg class="bi pe-none me-2" width="16" height="16">
+        <use xlink:href="#people-circle" />
+    </svg>
+    <div style="margin-left: 10px;font-weight: bolder;font-size: large;">
+        Alterar Produto
+    </div>
+</div>
+
+<div class="alert alert-danger" role="alert" *ngIf="errosBackEnd.length > 0">
+    Erros de validação Backend. Tente novamente.
+    <ul>
+        <li *ngFor="let erro of errosBackEnd"> {{ erro.mensagem }} </li>
+    </ul>
+</div>
+
+<br />
+
+<form #formProduto="ngForm">
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Nome</label>
+            <input type="text" placeholder="Digite nome produto"
+                [ngClass]="name.valid || (!formProduto.submitted && !(name.dirty || name.touched)) ? 'form-control ' : 'form-control is-invalid'"
+                value="" id="name" name="name" [(ngModel)]="produto.name" #name="ngModel" minlength="5" required>
+            <div class="invalid-feedback"
+                [hidden]="name.valid || (!formProduto.submitted && !(name.dirty || name.touched))">
+                O nome dever ter no minimo 5 caracteres.
+                <!-- <ul>
+            <li *ngFor="let erro of produto.erros.filter(e => e.campo == 'name')"> {{ erro.mensagem }} </li>
+          </ul> -->
+            </div>
+
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Categoria</label>
+            <select
+                [ngClass]="categoryName.valid || (!formProduto.submitted && !(categoryName.dirty || categoryName.touched)) ? 'form-control form-select ' : 'form-control form-select is-invalid'"
+                id="categoryName" name="categoryName" [(ngModel)]="produto.categoryName" #categoryName="ngModel"
+                required>
+                <option value="Roupa">Roupa</option>
+                <option value="Relogio">Relogio</option>
+                <option value="Esporte">Esporte</option>
+                <option value="Celular">Celular</option>
+                <option value="NoteBook">NoteBook</option>
+            </select>
+            <div class="invalid-feedback"
+                [hidden]="categoryName.valid || (!formProduto.submitted && !(categoryName.dirty || categoryName.touched))">
+                Categoria obrigatório.
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Nome do Arquivo imagem</label>
+            <input type="file" (change)="onFileSelected($event)" 
+                [ngClass]="imageUrl.valid || (!formProduto.submitted && !(imageUrl.dirty || imageUrl.touched)) ? 'form-control ' : 'form-control is-invalid'"
+                id="imageUrl" name="imageUrl" [(ngModel)]="produto.imageUrl" #imageUrl="ngModel" required>
+            <!-- <button (click)="onUpload()">Upload</button> -->
+            <div class="invalid-feedback"
+                [hidden]="imageUrl.valid || (!formProduto.submitted && !(imageUrl.dirty || imageUrl.touched))">
+                Nome do Arquivo imagem obrigatório.
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-12">
+        <label class="form-label">Descrição</label>
+        <textarea rows="5" placeholder="Digite a descrição do produto. 500 caracteres máximo"
+            [ngClass]="description.valid || (!formProduto.submitted && !(description.dirty || description.touched)) ? 'form-control ' : 'form-control is-invalid'"
+            id="description" name="description" [(ngModel)]="produto.description" #description="ngModel" required
+            maxlength="500">
+              </textarea>
+        <div class="invalid-feedback"
+            [hidden]="description.valid || (!formProduto.submitted && !(description.dirty || description.touched))">
+            Descrição obrigatório.
+        </div>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Preço (R$)</label>
+        <input type="text" placeholder="Digite o preço do produto" value=""
+            [ngClass]="price.valid || (!formProduto.submitted && !(price.dirty || price.touched)) ? 'form-control ' : 'form-control is-invalid'"
+            id="price" name="price" [(ngModel)]="produto.price" #price="ngModel" required moeda>
+        <div class="invalid-feedback"
+            [hidden]="price.valid || (!formProduto.submitted && !(price.dirty || price.touched))">
+            Preço obrigatório.
+        </div>
+    </div>
+    <div class="col-12">
+        <br />
+        <div class="text-center">
+            <div *ngIf="isLoading"><img height="40px" style="padding-right: 5px;"
+                    src="../../../assets/images/load_icon.gif" />Cadastrando Aguarde ...
+            </div>
+            <input type="submit" class="btn btn-success" (click)="cadastrar(formProduto.value)" value="Cadastrar">
+            &nbsp;&nbsp;
+            <a [routerLink]="['/produto/FindAll']" class="btn btn-primary">
+                Voltar
+            </a>
+        </div>
+    </div>
+
+</form>
+
+
 <p>alterar-produto works!</p>
 <button class="btn btn-info" (click)="sendMessage('Produto Alterado com sucesso!')">Enviar Mensagem</button>
+<button class="btn btn-info" (click)="PreviewImage()">PreviewImage</button>
+<img width="200" style="background-color: white;padding-right: 1px;border:1px;border-color: solid black;"
+    [src]="previewBase64Image" />
