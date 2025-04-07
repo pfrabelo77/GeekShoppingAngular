@@ -43,6 +43,7 @@
                 <option value="Esporte">Esporte</option>
                 <option value="Celular">Celular</option>
                 <option value="NoteBook">NoteBook</option>
+                <option value="StarWars">StarWars</option>
             </select>
             <div class="invalid-feedback"
                 [hidden]="categoryName.valid || (!formProduto.submitted && !(categoryName.dirty || categoryName.touched))">
@@ -51,10 +52,14 @@
         </div>
         <div class="col-md-4">
             <label class="form-label">Nome do Arquivo imagem</label>
-            <input type="file" (change)="onFileSelected($event)" 
+            <input type="text"  (change)="onFileSelected($event)"
                 [ngClass]="imageUrl.valid || (!formProduto.submitted && !(imageUrl.dirty || imageUrl.touched)) ? 'form-control ' : 'form-control is-invalid'"
-                id="imageUrl" name="imageUrl" [(ngModel)]="produto.imageUrl" #imageUrl="ngModel" required>
-            <!-- <button (click)="onUpload()">Upload</button> -->
+                id="imageUrl" name="imageUrl" [(ngModel)]="produto.imageUrl" observeFiles #imageUrl="ngModel" required readonly>
+                <input type="file"  (change)="onFileSelected($event)" class="form-control" id="imageFile" name="imageFile" >
+                <div class="text-end">
+                    <button class="btn btn-info" (click)="PreviewImage()">Preview Nova Imagem</button>
+                </div>
+
             <div class="invalid-feedback"
                 [hidden]="imageUrl.valid || (!formProduto.submitted && !(imageUrl.dirty || imageUrl.touched))">
                 Nome do Arquivo imagem obrigatório.
@@ -62,17 +67,26 @@
         </div>
 
     </div>
-    <div class="col-md-12">
-        <label class="form-label">Descrição</label>
-        <textarea rows="5" placeholder="Digite a descrição do produto. 500 caracteres máximo"
-            [ngClass]="description.valid || (!formProduto.submitted && !(description.dirty || description.touched)) ? 'form-control ' : 'form-control is-invalid'"
-            id="description" name="description" [(ngModel)]="produto.description" #description="ngModel" required
-            maxlength="500">
-              </textarea>
-        <div class="invalid-feedback"
-            [hidden]="description.valid || (!formProduto.submitted && !(description.dirty || description.touched))">
-            Descrição obrigatório.
+    <div class="row">
+        <div class="col-md-3">
+            <label class="form-label">Imagem</label>
+            <img class="form-control" style="border: solid 1px;border-color: black;max-height: 135px;"
+            [src]="previewBase64Image != '' ? previewBase64Image : urlApi + 'getimage/'+ idProduto "  />
+
         </div>
+        <div class="col-md-9">
+            <label class="form-label">Descrição</label>
+            <textarea rows="5" placeholder="Digite a descrição do produto. 500 caracteres máximo"
+                [ngClass]="description.valid || (!formProduto.submitted && !(description.dirty || description.touched)) ? 'form-control ' : 'form-control is-invalid'"
+                id="description" name="description" [(ngModel)]="produto.description" #description="ngModel" required
+                maxlength="500">
+                  </textarea>
+            <div class="invalid-feedback"
+                [hidden]="description.valid || (!formProduto.submitted && !(description.dirty || description.touched))">
+                Descrição obrigatório.
+            </div>
+        </div>
+
     </div>
     <div class="col-md-3">
         <label class="form-label">Preço (R$)</label>
@@ -90,7 +104,7 @@
             <div *ngIf="isLoading"><img height="40px" style="padding-right: 5px;"
                     src="../../../assets/images/load_icon.gif" />Cadastrando Aguarde ...
             </div>
-            <input type="submit" class="btn btn-success" (click)="cadastrar(formProduto.value)" value="Cadastrar">
+            <input type="submit" class="btn btn-success" (click)="Alterar(formProduto.value)" value="Alterar">
             &nbsp;&nbsp;
             <a [routerLink]="['/produto/FindAll']" class="btn btn-primary">
                 Voltar
@@ -100,9 +114,10 @@
 
 </form>
 
+<hr />
 
 <p>alterar-produto works!</p>
 <button class="btn btn-info" (click)="sendMessage('Produto Alterado com sucesso!')">Enviar Mensagem</button>
 <button class="btn btn-info" (click)="PreviewImage()">PreviewImage</button>
-<img width="200" style="background-color: white;padding-right: 1px;border:1px;border-color: solid black;"
-    [src]="previewBase64Image" />
+<img width="300" style="background-color: white;padding-right: 1px;border:1px;border-color: solid black;"
+    [src]="previewBase64Image != '' ? previewBase64Image : urlApi + 'getimage/'+ idProduto " />

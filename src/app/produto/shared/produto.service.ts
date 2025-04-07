@@ -53,6 +53,16 @@ export class ProdutoService {
       )
   }
 
+  Alterar(produto: Produto): Observable<Produto> {
+    console.log('Alterar: ', JSON.stringify(produto));
+    return this.httpClient
+      .put<Produto>(this.url + 'Update', JSON.stringify(produto), this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
   FindById(id: string): Observable<Produto> {
       return this.httpClient
       .get<Produto>(this.url + 'FindById/' + id, this.httpOptions)

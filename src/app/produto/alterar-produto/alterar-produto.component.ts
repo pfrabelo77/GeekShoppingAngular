@@ -8,6 +8,7 @@ import { Produto } from 'src/app/shared/produto.model';
 import { Erro } from 'src/app/shared/erro.model';
 import { ImageUpload } from 'src/app/shared/imageupload.model';
 import { MessageService } from 'src/app/shared/message.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-alterar-produto',
@@ -24,6 +25,8 @@ export class AlterarProdutoComponent implements OnInit {
   imageUpload: ImageUpload = new ImageUpload();
   previewBase64Image :string = '';
   idProduto : string | null = ''; 
+  urlApi = environment.apiUrlProdutos; //URL api DEV carregada do environment.ts 'https://localhost:7184/api/Produto/'
+  
 
   constructor(
     private messageService: MessageService,
@@ -35,13 +38,14 @@ export class AlterarProdutoComponent implements OnInit {
   ngOnInit(): void {
     this.produto = new Produto();
     this.produto.price = null;
-    this.idProduto = this.route.snapshot.paramMap.get('mensagemSucesso');
+    this.idProduto = this.route.snapshot.paramMap.get('id');
+    this.CarregarProduto(this.idProduto);
   }
 
   sendMessage(msg: string) {
     this.messageService.changeMessage(msg);
-    this.router.navigate(["produto/FindAll"]);
   }
+
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -70,15 +74,29 @@ export class AlterarProdutoComponent implements OnInit {
     }
   }
 
-  cadastrar(formProdutoValue: any): void {
+  CarregarProduto(id: string) {
+    console.log('CarregarProduto: ', id);
+
+    this.produtoService.FindById(id).subscribe({
+      next: (data) => {
+        this.produto = data;
+        console.log('CarregarProduto: ', data);
+        this.cdr.detectChanges(); // Força a atualização da UI
+      },
+      error: (err) => {
+        console.error('Erro ao buscar produtos', err)
+      }
+    });
+  }
+
+  Alterar(formProdutoValue: any): void {
     if (this.formProduto.form.valid) {
       this.isLoading = true;
       this.produto = Object.assign(this.produto, formProdutoValue);
       if (this.imageUpload.fileName && this.imageUpload.base64Image) {
         this.produto.imageUpload = this.imageUpload;
       }
-      //console.log('Cadastrar Produto request: ', this.produto);    
-      this.produtoService.Cadastrar(this.produto).subscribe({
+      this.produtoService.Alterar(this.produto).subscribe({
         next: (data) => {
           this.produto = data;
           //console.log('Cadastrar Produto response: ', data);
@@ -90,10 +108,9 @@ export class AlterarProdutoComponent implements OnInit {
             return;
           }
           else {
-            //this.doUpload(this.produto.id);
-            this.router.navigate(["produto/FindAll/" + "Produto Cadastrado com sucesso!"] );
+            this.sendMessage("Produto Alterado com sucesso!");
+            this.router.navigate(["produto/FindAll"]);
           }
-
         },
         error: (err) => {
           console.error('Erro ao Cadstrar produto', err)
