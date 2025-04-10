@@ -11,7 +11,7 @@ export class ClienteService {
   constructor() { }
 
   listarTodos(): Cliente[] {
-  	const clientes = localStorage['clientes'];
+  	const clientes = localStorage.getItem('clientes');
   	return clientes ? JSON.parse(clientes) : [];
   }
   
@@ -19,7 +19,7 @@ export class ClienteService {
   	const clientes = this.listarTodos();
   	cliente.id = uuidv4();
   	clientes.push(cliente);
-  	localStorage['clientes'] = JSON.stringify(clientes);
+  	localStorage.setItem('clientes',JSON.stringify(clientes));
   }
 
   CargaInicial(): void { 

@@ -21,8 +21,16 @@ export class AuthService {
 
   user: User = {
     username: "admin",
-    password: "123456"
+    password: "123456",
+    role: "admins"
   };
+
+  //* Usuário sem permissão de Deletar produto */
+  // user: User = {
+  //   username: "operador01",
+  //   password: "123456",
+  //   role: "operadores"
+  // };
 
  
   login() {
