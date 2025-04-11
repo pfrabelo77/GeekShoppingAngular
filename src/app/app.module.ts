@@ -26,6 +26,7 @@ import { AuthInterceptor } from './shared/auth.interceptor';
 import { HomeModule } from './home/home.module';
 import { ClienteModule } from './cliente/cliente.module';
 import { ProdutoModule } from './produto/produto.module';
+import { UserModule } from './user/user.module';
 
 // **************************************************
 import ptBr from '@angular/common/locales/pt';
@@ -48,7 +49,8 @@ export function initializeApp(configService: ConfigService) {
     HomeModule,
     ClienteModule,
     ProdutoModule,
-    HttpClientModule
+    HttpClientModule,
+    UserModule
     //FontAwesomeModule,
 
   ],
